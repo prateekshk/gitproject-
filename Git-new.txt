@@ -1,0 +1,102 @@
+https://www.youtube.com/watch?v=uaeKhfhYE0U
+
+1. Install git 
+
+2. How to configure git on user end 
+
+#git --version 
+#git config --global user.name "Prateek Shakya"
+#git config --global user.email "prateekshk@gmail.com"
+#git config --list
+#git config --global user.email                                ####check your config email ID
+#git config --global --edit                                    #### edit if want to change file email name details 
+#mkdir prateek
+#git init
+#ls -a
+
+# Create project in git new file
+
+file name prateek.java
+
+#git status 
+ 
+#git add prateek.java   					###################staging area
+
+#git status
+
+#git commit -m "Prateek file what chnage way chnage who change name date time"
+
+#git log 							########check all commit infromation 
+
+
+install fish shel for auto complete 
+
+#git status
+
+#git add . for all files 
+
+#git commit -m "commit "
+
+
+
+
+#####################################################################
+
+
+#git log
+
+#git checkout <Commit hash code/branch name>
+
+#git branch
+
+###################################################################
+
+#git branch <prateek.SM> dev
+
+
+#git checkout dev 
+
+
+#git checkout -b prateek/multiply
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+

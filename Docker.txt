@@ -1,0 +1,742 @@
+1. How to install Docker 
+###########################
+
+####################################################################
+2. Docker Create a first container, list container, remove container
+
+#Docker container ls
+#docker container run image name_download cat /etc/os-release 
+#docker container ls -a 
+#docker container run name_download_container sleep 30
+#docker container run nginx
+#docker container ls -a
+#docker container rm container_id 
+#docker container rm -f container_id id  id 
+#####################################################################
+
+3. Docker create a container in background, stop,start,detach container,
+
+#docker container ls -a 
+#docker container start container_id
+#docker container stop container_id
+#docker container run -d image_name_download sleep 30
+#docker container run -d -it image_name_download /bin/bash
+#docker container run it ubuntu /bin/bash  # p+control+q 
+
+How to remove all docker container with one command 
+#docker rm -f $(docker ps -a -q)
+
+########################################################################
+
+4. Docker docker container inspact
+
+#docker container logs containerid 
+#docker container top  containerid             #check running process 
+#ps -aux 
+#docker container top  containerid 
+#docker container stats
+
+#######################################################################
+
+5.Docker port mapping, rename container, restart container, exec container
+
+Docker port mapping
+
+#docker container run -d -p 3600:8081 --name webserver08 nginx 
+netstat -nltp
+
+rename container
+
+#docker container rename container_ID newname 
+
+restart container
+
+#docker container restart container_ID
+
+exec container
+
+# docker container exec -it container_ID /bin/bash 
+
+####################################################################################
+6. Docker Attach to running container, kill, wait, pause, unpause, prune, port
+
+# docker container run -d nginx
+
+# docker container lsest 
+# docker container attach container_ID    ### check web logs showing 
+
+##################################kill#######################################################
+
+# docker container run -itd ubuntu /bin/bash 
+
+#docker container kill container_ID
+
+##################pause#############unpause##########################################
+
+#docker pause my_container
+
+#docker unpause my_container
+
+######################################################################################
+
+#docker container wait container_ID  ###### exit status ###########
+
+#ifconfig |less
+#docker container inspect container_ID |less
+#docker container stop container_ID
+
+
+######################################################################################
+
+7. Docker create docker container, diff docker container and copy file into container
+
+# docker container create httpd sleep 100
+
+b0cbc28488f325e41be04dcd951555bc8560cd864bc10c0f9d31971b5b777c97
+
+# docker ps -a
+
+
+# docker start b0cbc28488f3
+
+#docker container diff container_ID
+
+#docker container run -it container_ID /bin/bash
+
+#watch "docker container diff container_ID"
+
+#docker container exec -it eed42e145420 /bin/bash
+
+#################How to enable auto restart of a docker container on system reboot########################
+
+
+#systemctl enable docker.service
+
+#docker update --restart=always container_ID
+
+
+
+8. Docker Export/Import docker container                                          ##### p+control+q #####
+
+#docker container run -it ubuntu /bin/bash
+
+#docker container export container_ID -o ubuntu_g_t.tar
+#docker container export container_ID  >ubuntu_g_t.tar
+
+#docker image import ubuntu_g_t.tar ubuntu_g_t
+
+#docker container run -it ubuntu_g_t /bin/bash
+
+#docker exec -u 0 -it 957019ece355 /bin/bash
+
+Docker how to create docker image from running container (docker commit)
+
+#docker exec -u 0 -it 957019ece355 /bin/bash
+
+#docker container commit --author "Prateek Shakya"  -m "web site container" container_ID mywebserver001
+
+#docker container commit --author "Prateek Shakya"  -m "web site container" 1d29182c2025 mywebserver001
+
+#docker container run -it mywebserver001 /bin/bash
+
+
+#######################################################################################################################################
+
+Docker How to push image on docker hub, image tag, image pull, docker login
+
+
+#docker pull ubuntu:14.04
+
+#docker image tag hub.docker.com your_docker_container prateekshk/your_docker_container
+
+#docker image tag nginx_imagename prateekshk_accountname/prodwebserver10_containername     working 
+
+
+#docker image tag prodwebserver09 prateekshk/prodwebserver091
+
+[root@server09 html]# docker image ls
+REPOSITORY                    TAG       IMAGE ID       CREATED          SIZE
+prodwebserver09               latest    c359ea3f91b3   54 minutes ago   256MB
+
+#docker image tag prodwebserver09 prateekshk/prodwebserver091
+#docker image ls
+
+[root@server09 ~]# docker images
+REPOSITORY                   TAG       IMAGE ID       CREATED       SIZE
+httpd                        latest    d140b777a247   2 weeks ago   168MB
+nginx                        latest    eb4a57159180   4 weeks ago   187MB
+prateekshk/prodwebserver10   latest    eb4a57159180   4 weeks ago   187MB
+[root@server09 ~]#
+[root@server09 ~]# docker push prateekshk/prateekshk/prodwebserver10
+
+Using default tag: latest
+The push refers to repository [docker.io/prateekshk/prateekshk/prodwebserver10]
+An image does not exist locally with the tag: prateekshk/prateekshk/prodwebserver10
+
+[root@server09 ~]# docker push prateekshk/prodwebserver10
+Using default tag: latest
+The push refers to repository [docker.io/prateekshk/prodwebserver10]
+9e96226c58e7: Pushed
+12a568acc014: Pushed
+7757099e19d2: Pushed
+bf8b62fb2f13: Pushed
+4ca29ffc4a01: Pushed
+a83110139647: Mounted from library/nginx
+ac4d164fef90: Pushing [======================>                            ]  34.14MB/74.76MB
+
+
+#docker push prateekshk/prodwebserver091
+
+#docker push prateekshk/prodwebserver091
+
+
+#####################################################################################################
+
+Docker How to inspect remove,inspect, list and history for the docker image
+
+
+############################################################list#####################################
+
+https://docs.docker.com/engine/reference/commandline/images/#:~:text=Format%20the%20output%20(%2D%2Dformat,output%20using%20a%20Go%20template.&text=When%20using%20the%20%2D%2Dformat,include%20column%20headers%20as%20well.
+
+[root@server09 ~]# docker images
+REPOSITORY                   TAG       IMAGE ID       CREATED       SIZE
+prateekshk/prodwebserver09   latest    eb4a57159180   4 weeks ago   187MB
+prateekshk/prodwebserver10   latest    eb4a57159180   4 weeks ago   187MB
+
+[root@server09 ~]# docker image ls
+REPOSITORY                   TAG       IMAGE ID       CREATED       SIZE
+prateekshk/prodwebserver09   latest    eb4a57159180   4 weeks ago   187MB
+prateekshk/prodwebserver10   latest    eb4a57159180   4 weeks ago   187MB
+
+[root@server09 ~]# docker image ls --format '{{.ID}} , {{.Repository}}'
+
+eb4a57159180 , prateekshk/prodwebserver10
+eb4a57159180 , prateekshk/prodwebserver09
+
+#docker images --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}"
+
+[root@server09 ~]#  docker images --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}"
+IMAGE ID       REPOSITORY                   TAG
+eb4a57159180   prateekshk/prodwebserver10   latest
+eb4a57159180   prateekshk/prodwebserver09   latest
+
+
+################################################history for the docker image#########################################3
+
+IMAGE ID       REPOSITORY                   TAG
+eb4a57159180   prateekshk/prodwebserver10   latest
+eb4a57159180   prateekshk/prodwebserver09   latest
+[root@server09 ~]#
+[root@server09 ~]# docker image history eb4a57159180
+IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
+eb4a57159180   4 weeks ago   /bin/sh -c #(nop)  CMD ["nginx" "-g" "daemon…   0B
+<missing>      4 weeks ago   /bin/sh -c #(nop)  STOPSIGNAL SIGQUIT           0B
+<missing>      4 weeks ago   /bin/sh -c #(nop)  EXPOSE 80                    0B
+<missing>      4 weeks ago   /bin/sh -c #(nop)  ENTRYPOINT ["/docker-entr…   0B
+<missing>      4 weeks ago   /bin/sh -c #(nop) COPY file:e57eef017a414ca7…   4.62kB
+<missing>      4 weeks ago   /bin/sh -c #(nop) COPY file:36429cfeeb299f99…   3.01kB
+<missing>      4 weeks ago   /bin/sh -c #(nop) COPY file:d4375883ed5db364…   276B
+<missing>      4 weeks ago   /bin/sh -c #(nop) COPY file:5c18272734349488…   2.12kB
+<missing>      4 weeks ago   /bin/sh -c #(nop) COPY file:7b307b62e82255f0…   1.62kB
+<missing>      4 weeks ago   /bin/sh -c set -x     && groupadd --system -…   112MB
+<missing>      4 weeks ago   /bin/sh -c #(nop)  ENV PKG_RELEASE=1~bookworm   0B
+<missing>      4 weeks ago   /bin/sh -c #(nop)  ENV NJS_VERSION=0.7.12       0B
+<missing>      4 weeks ago   /bin/sh -c #(nop)  ENV NGINX_VERSION=1.25.1     0B
+<missing>      4 weeks ago   /bin/sh -c #(nop)  LABEL maintainer=NGINX Do…   0B
+<missing>      5 weeks ago   /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      5 weeks ago   /bin/sh -c #(nop) ADD file:ba1250b6ecd5dd09d…   74.8MB
+
+###########################################Remove image##################################################################
+
+#docker rmi image_name
+
+#docker image rm -f image_name
+
+###################################################inspect#######################################################################
+
+#docker image inspact wordpress |less
+
+#docker image prune
+
+
+#################################################################################################################################
+
+Docker save/docker load. Diff between export and save & load &import
+
+#docker image save ubuntu > ubuntu.tar
+
+#docker image history ubuntu                              don't apply this with tag version 
+
+#docker image history ubuntu:10.04                         Use this 
+
+#docker image load < ubuntu.tar
+
+#docker container export                                       not take backup of mounted file location 
+
+
+#docker image load
+#docker container import
+
+####################################################################################################################################
+
+Docker Layered Architecture and Dockerfiles
+
+#vim dockerfile  > 
+
+FROM ubuntu:16.04
+RUN apt-get update && apt-get install -y tree
+RUN touch /tmp/1.txt
+RUN touch /tmp/2.txt
+RUN touch /tmp/3.txt
+RUN touch /tmp/4.txt
+
+
+
+#docker image build -t ubuntu:3 .
+#docker container run -it ubuntu:3 /bin/bash
+
+#######################################################################################################################################
+Docker Dockerfile (Label, Run, Env, Workdir)
+
+Label
+
+#vim Dockerfile
+FROM ubuntu:14.04
+Label name="Prateek C Shakya"
+
+#docker image inspect myubuntu:10
+
+#############Env####################3
+
+
+FROM ubuntu: 14.04
+LABEL name="Gaurav sharma
+LABEL email="coolgourav147@gmail.com
+ENV NAME gaurav
+ENV PASS password
+RUN pwd>/tmp/1stpwd.txt
+RUN cd /tmp/
+RUN pwd>/tmp/2ndpwd.txt
+WORKDIR /tmp
+RUN pwd>/tmp/3rdpwd.txt
+
+#docker image build -t myubuntu: 11.
+
+#docker container run -it myubuntu: 11. /bin/bash
+
+
+##################################################################################################################################################
+
+18. Docker Dockerfile (add, copy, user) difference between copy and add in docker file
+
+#vim dockerfile
+
+FROM ubuntu: 14.04
+LABEL name="Prateek Shakya"
+LABEL email="coolgourav147@gmail.com
+ENV NAME prateek
+ENV PASS password123
+RUN pwd>/tmp/1stpwd.txt
+RUN cd /tmp/
+RUN pwd>/tmp/2ndpwd.txt
+WORKDIR /tmp
+RUN pwd>/tmp/3rdpwd.txt
+RUN apt-get update && apt-get install -y openssh-server && apt-get install -y python
+RUN useradd -d /home/gaurav -g root -G sudo -m -p $(echo "$PASS" | openssl passwd -1 -stdin) $NAME
+RUN whoami > /tmp/1stwhoami.txt
+USER $NAME                                              $prateek user 
+RUN whoami > /tmp/2ndwhoami.txt
+
+
+#docker image build -t myubuntu: 81 .
+
+#docker container run -it myubuntu: 81 /bin/bash
+
+################################################################################
+#vim dockerfile
+
+FROM ubuntu: 14.04
+LABEL name="Prateek Shakya"
+LABEL email="coolgourav147@gmail.com
+ENV NAME prateek
+ENV PASS password123
+RUN pwd>/tmp/1stpwd.txt
+RUN cd /tmp/
+RUN pwd>/tmp/2ndpwd.txt
+WORKDIR /tmp
+RUN pwd>/tmp/3rdpwd.txt
+RUN apt-get update && apt-get install -y openssh-server && apt-get install -y python
+RUN useradd -d /home/gaurav -g root -G sudo -m -p $(echo "$PASS" | openssl passwd -1 -stdin) $NAME
+RUN whoami > /tmp/1stwhoami.txt
+USER $NAME                                              $prateek user 
+RUN whoami > /tmp/2ndwhoami.txt
+RUN mkdir -p /tmp/project
+COPY testproject /tmp/project/                                     #COPY command
+
+#docker image build -t myubuntu: 81 .
+
+##docker container run -it myubuntu: 81 /bin/bash
+
+
+##############################ADD################################################################
+#vim dockerfile
+
+FROM ubuntu: 14.04
+LABEL name="Prateek Shakya"
+LABEL email="coolgourav147@gmail.com
+ENV NAME prateek
+ENV PASS password123
+RUN pwd>/tmp/1stpwd.txt
+RUN cd /tmp/
+RUN pwd>/tmp/2ndpwd.txt
+WORKDIR /tmp
+RUN pwd>/tmp/3rdpwd.txt
+RUN apt-get update && apt-get install -y openssh-server && apt-get install -y python
+RUN useradd -d /home/gaurav -g root -G sudo -m -p $(echo "$PASS" | openssl passwd -1 -stdin) $NAME
+RUN whoami > /tmp/1stwhoami.txt
+USER $NAME                                              $prateek user 
+RUN whoami > /tmp/2ndwhoami.txt
+RUN mkdir -p /tmp/project
+ADD testproject.tar.gz /tmp/project/ 
+
+
+#########################################################################################################################
+
+Docker Dockerfile ( CMD )
+
+FROM ubuntu: 14.04
+LABEL name="Gaurav sharma"
+LABEL email="coolgourav147@gmail.com"
+ENV NAME gaurav
+ENV PASS password123
+RUN pwd>/tmp/1stpwd.txt
+RUN cd /tmp/
+RUN pwd>/tmp/2ndpwd.txt
+WORKDIR /tmp
+RUN pwd>/tmp/3rdpwd.txt
+RUN apt-get update && apt-get install -y openssh-server && apt-get install -y python
+RUN useradd -d /home/gaurav -g root -G sudo -m -p $(echo "$PASS" | openssl passwd -1 -stdin) $NAME
+RUN whoami > /tmp/1stwhoami.txt
+USER $NAME
+RUN whoami > /tmp/2ndwhoami.txt
+RUN mkdir -p /tmp/project
+ADD testproject1.tar.gz /tmp/project/
+CMD ["python"]
+
+
+root@localhost dockerfiles]# docker container run -P -it myubuntu: 81
+Python 2.7.6 (default, Nov 13 2018, 12:45:42)
+GCC 4.8.4] on linux2
+Type_"help", "copyright", "credits" or "license" for more information.
+
+####################################################################################################################################
+
+Docker Dockerfile ( Expose and create a SSH container using dockerfile )
+
+FROM ubuntu: 16.04
+ENV NAME gaurav
+ENV PASS password123
+RUN mkdir -p /var/run/sshd
+RUN apt-get update
+RUN apt-get install -y openssh- server
+RUN useradd -d /home/gaurav -g root -G sudo -m -p $(echo "$PASS" | openssl passwd -1 -stdin) $NAME
+CMD ["/usr/sbin/sshd", "-D"]
+
+root@localhost dockerfiles]# docker image build -t myubuntu:81 .
+
+root@localhost dockerfiles]# docker container run -P -itd container_ID 
+
+####################################################################################################################
+
+FROM ubuntu: 16.04
+ENV NAME gaurav
+ENV PASS password123
+RUN mkdir -p /var/run/sshd
+RUN apt-get update
+RUN apt-get install -y openssh- server
+RUN useradd -d /home/gaurav -g root -G sudo -m -p $(echo "$PASS" | openssl passwd -1 -stdin) $NAME
+Expose 22 80 
+CMD ["/usr/sbin/sshd", "-D"]
+
+#########################################################################################################################
+
+22. Docker Volume ( Docker Storage), mysql data persist in docker container
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###########################################################
+How to remove all docker container with one command 
+#docker rm -f $(docker ps -a -q)
+###########################################################
+
+
+##########################################
+List all container
+#docker container ls --all
+##########################################
+
+#docker exec -u 0 -it 957019ece355 /bin/bash
+
+########################################################
+Docker Rename container from the command line and GUI
+
+[root@server09 ~]# docker rename --help
+
+Usage:  docker rename CONTAINER NEW_NAME
+
+Rename a container
+
+Aliases:
+  docker container rename, docker rename
+
+#docker rename oldname newname 
+
+########################################################
+	
+
+#######################################################################################
+Mount docker 
+#docker run -t -d -P -v /tmp/nginx/html:/usr/local/apache2 --name=test nginx:latest
+
+docker run -p 80:80 -t -d -P -v /tmp/nginx/html:/usr/local/apache2 --name=test1 nginx:latest
+
+#######################################################################################
+
+
+#dnf install docker-ce docker-ce-cli containerd.io
+#systemctl start docker
+#systemctl enable docker
+#systemctl status docker
+
+#docker ps  -a
+
+
+   29  docker container exec -it ee2dbe6e71fd /bin/bash
+   30  docker container exec -d ee2dbe6e71fd
+   31  docker container exec -it  -d ee2dbe6e71fd
+   32  docker container  -it  -d ee2dbe6e71fd
+   33  docker run -it  -d ee2dbe6e71fd
+   34  docker ps -a
+   35  docker run ee2dbe6e71fd
+   36  docker start ee2dbe6e71fd
+   37  docker ps
+   38  docker container exec -it ee2dbe6e71fd /bin/bash
+   39  docker inspect ee
+   40  docker container exec -it ee2dbe6e71fd /bin/bash
+   41  docker ps
+   42  docker container exec -it /bin/bash
+   43  docker container exec -it 93a1b3e513f0  /bin/bash
+   44  docker ps
+   45  docker inspect 93a1b3e513f0
+   46  ip addr
+   47  docker ps
+   48  history
+   49  docker inspect 93a1b3e513f0
+   50  ip addr
+   51  docker container exec -it 93a1b3e513f0  /bin/bash
+   52  docker run -d -p 172.17.0.2:80:80 93a1b3e513f0
+   53  docker run -d -p 0.0.0.0:80:80 93a1b3e513f0
+   54  docker start -d -p 0.0.0.0:80:80 93a1b3e513f0
+   55  docker start  -p 0.0.0.0:80:80 93a1b3e513f0
+   56  docker ps
+   57  docker container -exec -it 93a1b3e513f0 /bin/bash
+   58  docker container exec -it 93a1b3e513f0 /bin/bash
+   59  mkdir /tmp/nginx/html
+   60  ls /tmp/nginx/html
+   61  mkdir -p  /tmp/nginx/html
+   62  cd
+   63  docker run -t -d -P -v /tmp/nginx/html:/usr/local/apache2 93a1b3e513f0
+   64  docker ps
+   65  docker run -t -d -P -v /tmp/nginx/html:/usr/local/apache2 --name=test nginx:latest
+   66  docker ps
+   67  docker run -t -d -P -v /tmp/nginx/html:/usr/local/apache2 --name=test nginx:latest
+   68  docker run -t -d -P -v /tmp/nginx/html:/usr/local/apache2 --name=fresh nginx:latest
+   69  df -h
+   70  ls /tmp/nginx/html/
+   71  cd /tmp/nginx/html/
+   72  ll
+   73  test.txt
+   74  touch test.txt
+   75  docker ps
+   76  docker container exec -it /bin/bash 31872e783898
+   77  docker ps
+   78  docker container exec -it  31872e783898 /bin/bash
+   79  ls
+   80  pwd
+   81  touch prateek
+   82  ls
+   83  ip addr
+   84  docker container exec -it  31872e783898 /bin/bash
+   85  history
+   86  docker ps
+   87  docker container exec -it  31872e783898 /bin/bash
+   88  clear
+   89  hostnamectl
+   90  docker ps
+   91  docker -rm 31872e783898 0a6b3660f253 93a1b3e513f0
+   92  docker -rm 31872e783898, 0a6b3660f253, 93a1b3e513f0,
+   93  docker -rf 93a1b3e513f0
+   94  clear
+   95  docker -rf 93a1b3e513f0
+   96  clear
+   97  docker ps
+   98  docker -rf 0a6b3660f253
+   99  clear
+  100  docker rm -f $(docker ps -a -q)
+  101  clear
+  102  history
+  103  docker ps
+  104  docker container httpd
+  105  docker run --name mywebserver01 -p 80:80 -itd nginx
+  106  ls
+  107  docker ps
+  108  clear
+  109  docker ps
+  110  docker --publish 8080:80 b81dfa624df5
+  111  docker container run --detach --publish 8080:80 b81dfa624df5
+  112  docker stop b81dfa624df5
+  113*
+  114  docker start b81dfa624df5
+  115  docker ps
+  116  docker container ls --all
+  117  clear
+  118  docker container ls --all
+  119  docker inspect b81dfa624df5 /bin/bash
+  120  docker inspect b81dfa624df5 bash
+  121  docker exec -it b81dfa624df5 bash
+  122  docker container run --publish 80:80 nginx
+  123  docker
+  124  docker ps
+  125  docker container run --publish 8080:80 nginx
+  126*
+  127  docker ps -a
+  128  docker rm -f  78738bc0c91e 4f60be2906cc
+  129  ls
+  130  docker ps -a
+  131  docker exec -it mywebserver01 bash
+  132  docker ps
+
+  134  docker restart b81dfa624df5
+  135  docker exec -u 0 -it mywebserver01 /bin/bash
+ 
+  137  docker inspect b81dfa624df5 /bin/bash
+ 
+  139  docker ps -a
+ 
+  141  docker rm -f a07e908a0e47
+
+  145  docker restart b81dfa624df5
+
+
+
+/usr/local/apache2/Settle
+
+
+nsswitch.conf linux
+  
+docker run --name local-mysql -e MYSQL_ROOT_PASSWORD=12345 -d mysql:5.7
+
+docker run --name local-mysqldb01 -e MYSQL_ROOT_PASSWORD=Support@123 -d mysql:latest
+
+
+docker exec -it local-mysqldb01 mysql -u root -p
+
+docker run --name local-wordpressdb01 -p 8080:80 -d wordpress

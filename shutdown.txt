@@ -1,0 +1,2 @@
+ shutdown +1 "Shutdown -c"
+Shutdown scheduled for Wed 2023-07-05 06:37:35 EDT, use 'shutdown -c' to cancel.
